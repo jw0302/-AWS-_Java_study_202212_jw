@@ -38,7 +38,7 @@ public class Lotto {
 			}
 			
 			for (int i = 0; i < nums.length; i++) {
-				System.out.print("이번주 로또 당첨 번호는 : " + nums[i]);
+				System.out.println("이번주 로또 당첨 번호는 : " + nums[i]);
 			}
 			
 	}
