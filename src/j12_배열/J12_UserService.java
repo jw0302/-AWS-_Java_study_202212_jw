@@ -6,9 +6,11 @@ public class J12_UserService {
 	
 	private Scanner scanner;
 	private char select;
+	private J12_UserRepository userRepository;
 	
-	public J12_UserService() {
+	public J12_UserService(J12_UserRepository userRepository) {
 		scanner = new Scanner(System.in);
+		this.userRepository = userRepository;
 	}
 	
 	public void run() {
@@ -52,6 +54,68 @@ public class J12_UserService {
 		System.out.println();
 	}
 	
+	private void showUsers() {
+		
+		J12_User[] users = userRepository.getUserTable();
+		
+		System.out.println("========<< 회원 전체 조회 >>========");
+		
+		for (J12_User user : users) {
+			System.out.println(user.toString());
+		}
+		
+		System.out.println("=====================================");
+		
+	}
+	
+	private void registerUser() {
+		J12_User user = new J12_User();
+		
+		System.out.println("==========<< 회원 등록 >>==========");
+		System.out.print("사용자이름 : ");
+		user.setUsername(scanner.nextLine());
+		 
+		System.out.print("비밀번호 : ");
+		user.setPassword(scanner.nextLine());
+		
+		System.out.print("성명 : ");
+		user.setName(scanner.nextLine());
+		
+		System.out.print("이메일 : ");
+		user.setEmail(scanner.nextLine());
+		
+		userRepository.saveUser(user);
+	}
+	
+	private void findUserByUsername() {
+		J12_User findUser = new J12_User();
+		
+		System.out.print("사용자 이름 : ");
+		findUser.setUsername(scanner.nextLine());
+		
+		System.out.println(findUser.toString());
+		
+	}
+	
+	private void updateInfomation() {
+		J12_User updateUser = new J12_User();
+		
+		System.out.print("수정 할 사용자이름을 입력하세요 : ");
+		updateUser.setUsername(scanner.nextLine());
+		
+		System.out.println("==========<< 수정메뉴 >>==========");
+		System.out.println("사용자이름 : ");
+		System.out.println("=================================="); 
+		System.out.println("1. 비밀번호 변경 : ");
+		System.out.println("2. 이름 변경 : ");
+		System.out.println("3. 이메일 변경 : ");
+		System.out.println("==================================");
+		System.out.println("b. 뒤로가기");
+		System.out.println();
+	}
+	
+	
+	
 	private boolean mainMenu(char select) {
 		boolean flag = true;
 		
@@ -60,13 +124,13 @@ public class J12_UserService {
 			
 		}else {
 			if(select == '1') {
-				
+				showUsers();
 			}else if(select == '2') {
-				
+				registerUser();
 			}else if(select == '3') {
-				
+				findUserByUsername();
 			}else if(select == '4') {
-				
+				updateInfomation();
 			}else {
 				System.out.println(getSelectedErrorMessage());
 			}

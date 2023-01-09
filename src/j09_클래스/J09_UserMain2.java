@@ -1,4 +1,4 @@
-package jo9_클래스;
+package j09_클래스;
 
 import java.util.Scanner;
 
