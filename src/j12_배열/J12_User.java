@@ -7,8 +7,6 @@ public class J12_User {
 	private String password;	// 비밀번호 
 	private String name;		// 성명
 	private String email;		// 이메일
-//	private String findUser;
-//	private String updateUser;
 	
 	public J12_User() {}			// ctrl + space : 아무것도 입력하지 않은 상태에서 누르면 자동 생성
 	
