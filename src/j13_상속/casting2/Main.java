@@ -15,7 +15,7 @@ public class Main {
 //		
 //		Transportation transportation2 = subway;
 		
-		Transportation[] transportations = new Transportation[6];
+		Transportation[] transportations = new Transportation[6]; 
 		
 		transportations[0] = taxi;
 		transportations[1] = subway;

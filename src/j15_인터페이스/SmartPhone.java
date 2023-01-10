@@ -26,7 +26,7 @@ public class SmartPhone extends Equipment implements Calculator {
 	
 	@Override
 	public double division(double x, double y) {
-		System.out.println("스마트폰에서 나누기 실행");
+		System.out.println("스마트폰에서 나누기 실행"); 
 		
 		if(x == 0 || y == 0) {
 			return ERROR;
