@@ -12,7 +12,7 @@ public class ObjectEquals {
 		System.out.println(name2);
 		
 		System.out.println(name1 == name2);			// 주소값 비교
-		System.out.println(name1.equals(name3));
+		System.out.println(name1.equals(name3));	// equals 는 문자열 비교할때 쓴다
 		
 /////////////////////////////////////////////////////////////////
 		
@@ -21,8 +21,9 @@ public class ObjectEquals {
 		SubStudent s3 = new SubStudent("박은빈", 24);
 		
 		
-		System.out.println(s1.equals(s1));
+		System.out.println(s2.equals(s3));
 		
 	}
 
 }
+// 상수는 무조건 초기화가 한번 일어나야 한다.

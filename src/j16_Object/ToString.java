@@ -16,7 +16,7 @@ public class ToString {
 		
 		System.out.println();
 		
-		System.out.println(student1.toString());
+		System.out.println(student1.toString()); 
 		System.out.println(student2.toString());
 		System.out.println(student3.toString());
 		System.out.println(student4.toString());

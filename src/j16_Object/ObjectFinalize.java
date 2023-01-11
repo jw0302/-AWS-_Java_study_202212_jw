@@ -16,7 +16,7 @@ class Test {
 	}
 	
 }
-
+// 스택 : 정적 메모리 힙 : 동적 메모리	// 소멸되는 시점에 finalize 시작
 public class ObjectFinalize {
 	
 	public static void main(String[] args) {

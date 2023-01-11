@@ -8,7 +8,7 @@ public class Variable2 {
 		
 		char alphabetA = 'A';
 		
-		System.out.println("김" + firstName1 + firstName2);
+		System.out.println("김" + firstName1 + firstName2);	// "김" + firstName1 + firstName2 == "김" + '가' + '일'    이런뜻
 		System.out.println("알파벳A: " + alphabetA);
 		
 		System.out.println(alphabetA + 'B');

@@ -24,10 +24,10 @@ public class HelloJava {
 	public static void main(String[] args) {
 		
 		System.out.println("Hello, Java");
-		System.out.println("이름 : 장진원");
-		System.out.println("주소 : 부산 진구 연지동");
-		System.out.println("연락처 : 010-7753-4493");
-		System.out.println("수업 : AWS기반 공공빅데이터 활용 웹개발자 양성");
+		System.out.println("이름 : 일이삼");
+		System.out.println("주소 : 전국 팔도");
+		System.out.println("연락처 : 010-1234-4321");
+		System.out.println("수업 : 백엔드 양성 수업");
 		// print : 한줄의 문자열을 출력해라. 
 		//println :한줄의 문자열을 출력후 끝에 줄바꿈을 해라.
 	}

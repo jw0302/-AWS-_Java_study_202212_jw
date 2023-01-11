@@ -3,15 +3,15 @@ package j01_출력;
 public class Output2 {
 
 	public static void main(String[] args) {
-		int year = 5;
+		int year = 5;									// year이라는 변수에 5를 넣어준다
 		
-		System.out.println("이름 : 장진원");
-		System.out.println("나이 : " + (25 + year));
-		System.out.println("이름 : 장진수");
+		System.out.println("이름 : 이수수");
+		System.out.println("나이 : " + (25 + year));	// 25 + year(5) = 30
+		System.out.println("이름 : 이수자");
 		System.out.println("나이 : " + (26 + year));
-		System.out.println("이름 : 장진우");
+		System.out.println("이름 : 이지지");
 		System.out.println("나이 : " + (27 + year));
-		System.out.println("이름 : 장진문");
+		System.out.println("이름 : 이주주");
 		System.out.println("나이 : " + (28 + year));
 		
 		//sysout -> ctrl+space bar -> enter -> System.out.println(); 완성
