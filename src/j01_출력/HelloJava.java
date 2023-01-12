@@ -1,7 +1,5 @@
 package j01_출력;
 
-import j17_스태틱.싱글톤.KIA;
-
 /**
  * 
  * @author ITPS

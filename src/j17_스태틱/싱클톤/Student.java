@@ -1,4 +1,4 @@
-package j17_스태틱.싱글톤;
+package j17_스태틱.싱클톤;
 
 public class Student {
 	
@@ -20,7 +20,5 @@ public class Student {
 	public String toString() {
 		return "Student [studentCode=" + studentCode + ", name=" + name + "]";
 	}
-	
-	
 
 }
