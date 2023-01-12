@@ -1,5 +1,7 @@
 package j01_출력;
 
+import j17_스태틱.싱글톤.KIA;
+
 /**
  * 
  * @author ITPS
@@ -30,6 +32,9 @@ public class HelloJava {
 		System.out.println("수업 : 백엔드 양성 수업");
 		// print : 한줄의 문자열을 출력해라. 
 		//println :한줄의 문자열을 출력후 끝에 줄바꿈을 해라.
+//		System.out.println();
+		
+//		KIA.getInstance().printCompanyName();
 	}
 	
 }
