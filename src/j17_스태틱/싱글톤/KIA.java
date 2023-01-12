@@ -5,7 +5,7 @@ public class KIA {
 	// 여기서부터
 	private static KIA instance = null;
 	
-	private KIA() {}
+	private KIA() {}					// 싱글톤은 딱 하나만 존재해야 하기 때문에 생성자가 private이다.
 	
 	public static KIA getInstance() {
 		if(instance == null) {

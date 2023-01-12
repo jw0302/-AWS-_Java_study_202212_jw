@@ -7,7 +7,7 @@ public class A {
 	private static A instance = null;
 	
 	private A() {
-	 	Student[] students = new Student[3];
+	 	Student[] students = new Student[3]; 
 	}					// 싱글톤은 딱 하나만 존재해야 하기 때문에 생성자가 private이다.
 	
 	public static A getInstance() {
