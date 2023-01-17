@@ -18,6 +18,8 @@ import java.awt.event.MouseEvent;
 
 public class UserManagementFrame extends JFrame {
 	
+	private static final long serialVersionUID = 1L;
+
 	private CardLayout mainCard;
 
 	private JPanel mainPanel;
@@ -29,6 +31,7 @@ public class UserManagementFrame extends JFrame {
 	private JTextField registerEmailField;
 	
 	public static void main(String[] args) {
+		
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
@@ -42,8 +45,10 @@ public class UserManagementFrame extends JFrame {
 	}
 
 	public UserManagementFrame() {
+		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 400, 500);
+		
 		mainPanel = new JPanel();
 		mainPanel.setBackground(new Color(255, 255, 255));
 		mainPanel.setBorder(null);
