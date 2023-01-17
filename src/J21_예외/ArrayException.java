@@ -5,12 +5,14 @@ public class ArrayException {
 	public static void main(String[] args) {
 		
 		Integer[] nums = {1, 2, 3, 4, 5};
+
+		
 		
 		try {
-//			throw new NullPointerException();		// 강제로 예외 발생 throw~~~~
-			for(int i = 0; i < 6; i++) {
-				System.out.println(nums[i]);
-			}
+			throw new NullPointerException();		// 강제로 예외 발생 throw~~~~
+//			for(int i = 0; i < 6; i++) {
+//				System.out.println(nums[i]);
+//			}
 		}catch (IndexOutOfBoundsException e) {
 			System.out.println("예외 처리함");
 		}catch (NullPointerException e) {
