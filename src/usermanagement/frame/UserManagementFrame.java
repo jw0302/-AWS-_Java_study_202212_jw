@@ -233,6 +233,16 @@ public class UserManagementFrame extends JFrame {
 		loginPanel.add(passwordLabel);
 		
 		JButton loginButton = new JButton("Login");
+		
+		loginButton.addMouseListener(new MouseAdapter() {
+			
+			public void mouseClicked(MouseEvent e) {
+				
+				System.out.println("로그인 요청!!!");
+				
+			}
+		});
+		
 		loginButton.setBackground(new Color(255, 255, 255));
 		loginButton.setFont(new Font("HY궁서B", Font.BOLD, 20));
 		loginButton.setForeground(new Color(0, 0, 0));
