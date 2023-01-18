@@ -1,30 +1,27 @@
 package usermanagement.frame;
 
-import java.awt.EventQueue;
-
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-
-import com.google.gson.JsonObject;
-
-import j20_JSON.builder.User;
-import usermanagement.service.UserService;
-
 import java.awt.CardLayout;
 import java.awt.Color;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.SwingConstants;
+import java.awt.EventQueue;
 import java.awt.Font;
-import javax.swing.JTextField;
-import javax.swing.JPasswordField;
-import javax.swing.JButton;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JPasswordField;
+import javax.swing.JTextField;
+import javax.swing.SwingConstants;
+
+import com.google.gson.JsonObject;
+
+import usermanagement.service.UserService;
 
 public class UserManagementFrame extends JFrame {
 	
@@ -89,7 +86,9 @@ public class UserManagementFrame extends JFrame {
 		signinLink.addMouseListener(new MouseAdapter() {
 			
 			public void mouseClicked(MouseEvent e) {
+				
 				mainCard.show(mainPanel, "loginPanel");
+				
 				clearFields(registerFields);
 			}
 		});
@@ -237,8 +236,31 @@ public class UserManagementFrame extends JFrame {
 		loginButton.addMouseListener(new MouseAdapter() {
 			
 			public void mouseClicked(MouseEvent e) {
+				JsonObject userJson = new JsonObject();
+				System.out.println("clicked signin button");
 				
-				System.out.println("로그인 요청!!!");
+				if(usernameField.getText().contains("@")) {
+					userJson.addProperty("email", usernameField.getText());
+				} else {
+					userJson.addProperty("username", usernameField.getText());
+				}
+				
+				userJson.addProperty("password", passwordField.getText());
+				
+				UserService userService = UserService.getInstance();
+				
+				Map<String, String> response = userService.loginService(userJson.toString());
+				
+				if(response.containsKey("error")) {
+					
+					JOptionPane.showMessageDialog(null, response.get("error"), "error", JOptionPane.ERROR_MESSAGE);
+					
+					return;
+				}
+				
+				JOptionPane.showMessageDialog(null, response.get("ok"), "ok", JOptionPane.INFORMATION_MESSAGE);
+				
+				mainCard.show(mainPanel, "appHome");
 				
 			}
 		});
@@ -252,13 +274,14 @@ public class UserManagementFrame extends JFrame {
 		JLabel signupDesc = new JLabel("Don't have an account?");
 		signupDesc.setFont(new Font("맑은 고딕", Font.BOLD, 12));
 		signupDesc.setHorizontalAlignment(SwingConstants.CENTER);
-		signupDesc.setBounds(61, 364, 161, 15);
+		signupDesc.setBounds(12, 365, 161, 15);
 		loginPanel.add(signupDesc);
 		
 		JLabel signupLink = new JLabel("Sign up");
 		signupLink.addMouseListener(new MouseAdapter() {
 			
 			public void mouseClicked(MouseEvent e) {
+				
 				mainCard.show(mainPanel, "registerPanel");
 				clearFields(loginFields);
 			}
@@ -266,14 +289,14 @@ public class UserManagementFrame extends JFrame {
 		
 		signupLink.setFont(new Font("맑은 고딕", Font.BOLD, 12));
 		signupLink.setForeground(new Color(0, 102, 204));
-		signupLink.setBounds(234, 364, 57, 15);
+		signupLink.setBounds(150, 390, 57, 15);
 		loginPanel.add(signupLink);
 		
 		JLabel forgotPasswordLink = new JLabel("Forgot your password?");
 		forgotPasswordLink.setForeground(new Color(0, 102, 204));
 		forgotPasswordLink.setFont(new Font("맑은 고딕", Font.BOLD, 12));
 		forgotPasswordLink.setHorizontalAlignment(SwingConstants.CENTER);
-		forgotPasswordLink.setBounds(98, 390, 161, 15);
+		forgotPasswordLink.setBounds(181, 365, 161, 15);
 		loginPanel.add(forgotPasswordLink);
 		
 		loginFields.add(usernameField);
@@ -283,6 +306,26 @@ public class UserManagementFrame extends JFrame {
 		registerFields.add(registerPasswordField);
 		registerFields.add(registerNameField);
 		registerFields.add(registerEmailField);
+		
+		JPanel backHomePanel = new JPanel();
+		mainPanel.add(backHomePanel, "appHome");
+		backHomePanel.setLayout(null);
+		
+		JLabel lblNewLabel = new JLabel("New label");
+		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel.setBounds(23, 106, 336, 57);
+		backHomePanel.add(lblNewLabel);
+		
+		JButton backHomeButton = new JButton("goBackHome");
+		backHomeButton.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				mainCard.show(mainPanel, "loginPanel");
+				clearFields(loginFields);
+			}
+		});
+		backHomeButton.setBounds(130, 229, 114, 23);
+		backHomePanel.add(backHomeButton);
 		
 	}
 	
@@ -296,6 +339,4 @@ public class UserManagementFrame extends JFrame {
 			field.setText("");
 		}
 	}
-	
-	
 }

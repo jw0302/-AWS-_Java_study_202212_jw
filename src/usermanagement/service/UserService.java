@@ -33,6 +33,49 @@ public class UserService {
 		gson = new GsonBuilder().setPrettyPrinting().create();
 	}
 	
+	public Map<String, String> loginService(String userJson) {
+		
+		
+		// response : 응답
+		Map<String, String> response = new HashMap<>();
+		
+		Map<String, String> userMap = gson.fromJson(userJson, Map.class);
+		
+		for(Entry<String, String> userEntry : userMap.entrySet()) {
+			
+			if(userEntry.getValue().isBlank()) {
+				response.put("error", userEntry.getKey() + "은(는) 공백일 수 없습니다.");
+				
+				return response;
+			}
+		}
+		
+		User user = gson.fromJson(userJson, User.class);
+		User user2 = null;
+		
+		
+		if(userRepository.findUserByEmail(user.getEmail()) != null) {
+			user2 = userRepository.findUserByEmail(user.getEmail());
+		}
+		
+		if(userRepository.findUserByUsername(user.getUsername()) != null) {
+			user2 = userRepository.findUserByUsername(user.getUsername());
+		}
+		
+		if(user2 == null) {
+			response.put("error", "등록되지 않는 사용자입니다.");
+		}
+		
+		if(!BCrypt.checkpw(user.getPassword(), user2.getPassword())) {
+			response.put("error", "비밀번호가 일치하지 않습니다.");
+		}
+		
+		response.put("ok", "로그인 성공.");
+		
+		return response;
+		
+	}
+	
 	public Map<String, String> register(String userJson) {
 		// response : 응답
 		Map<String, String> response = new HashMap<>();
@@ -63,7 +106,7 @@ public class UserService {
 			return response;
 		}
 		
-		user.setPassword(BCrypt.hashpw(user.getPassword(), BCrypt.gensalt()));  	
+		user.setPassword(BCrypt.hashpw(user.getPassword(), BCrypt.gensalt()));  	//	비밀번호 암호화 하는 부분
 		
 		System.out.println("암호화 후");
 		System.out.println(user);
@@ -83,6 +126,8 @@ public class UserService {
 	private boolean duplicatedEmail(String email) {
 		return userRepository.findUserByEmail(email) != null;
 	}
+	
+	
 	
 
 	
