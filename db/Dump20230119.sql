@@ -4,7 +4,7 @@ USE `db_study2_explain`;
 --
 -- Host: 127.0.0.1    Database: db_study2_explain
 -- ------------------------------------------------------
--- Server version	8.0.32
+-- Server version	8.0.32course_mst
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
