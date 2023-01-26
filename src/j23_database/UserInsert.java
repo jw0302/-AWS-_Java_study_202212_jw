@@ -118,11 +118,11 @@ public class UserInsert {
 		
 		/*=======================================================================*/
 		
-		List<Integer> roleIdList = new ArrayList<>();
+		List<Integer> roleIdList = new ArrayList<>();			// list -> 
 		roleIdList.add(2);
 		roleIdList.add(3);
 		
-		Map<String, Object> map = new HashMap<>();
+		Map<String, Object> map = new HashMap<>();				// map -> 임시 엔티티 객체 , 해당 키값으로 바로 해당값을 불러오고 싶을때 쓴다
 		map.put("user", user);
 		map.put("roles", roleIdList);
 		

@@ -9,6 +9,7 @@ import org.mindrot.jbcrypt.BCrypt;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import usermanagement.entity.RoleDtl;
 import usermanagement.entity.User;
 import usermanagement.repository.UserRepository;
 
@@ -25,6 +26,7 @@ public class UserService {
 		if (instance == null) {
 			instance = new UserService();
 		}
+		
 		return instance;
 	}
 	
@@ -32,6 +34,7 @@ public class UserService {
 		userRepository = UserRepository.getInstance();
 		gson = new GsonBuilder().setPrettyPrinting().create();
 	}
+	
 	
 	public Map<String, String> register(String userJson) {
 		// response : 응답
@@ -55,11 +58,13 @@ public class UserService {
 		
 		if(duplicatedUsername(user.getUsername())) {
 			response.put("error", "이미 사용중인 사용자 이름입니다.");
+			
 			return response;
 		}
 		
 		if(duplicatedEmail(user.getEmail())) {
 			response.put("error", "이미 가입된 이메일 입니다.");
+			
 			return response;
 		}
 		
@@ -70,19 +75,29 @@ public class UserService {
 		
 		userRepository.saveUser(user);
 		
+		RoleDtl roleDtl = RoleDtl.builder()
+				.roleId(3)
+				.userId(user.getUserId())
+				.build();
+		
+		userRepository.saveRoleDtl(roleDtl);
+		
 		response.put("ok", "회원가입 성공.");
 		
 		return response;
 		
 	}
 	
+	
 	private boolean duplicatedUsername(String username) {
 		return userRepository.findUserByUsername(username) != null;
 	}
 	
+	
 	private boolean duplicatedEmail(String email) {
 		return userRepository.findUserByEmail(email) != null;
 	}
+	
 	
 	public Map<String, String> authorize(String loginUserJson) {
 		
@@ -108,6 +123,7 @@ public class UserService {
 			user = userRepository.findUserByEmail(usernameAndEmail);
 			if(user == null) {
 				response.put("error", "사용자 정보를 확인해주세요.");
+				
 				return response;
 			}
 			
@@ -115,10 +131,12 @@ public class UserService {
 		
 		if(!BCrypt.checkpw(loginUser.get("password"), user.getPassword())) {
 			response.put("error", "사용자 정보를 확인해주세요.");
+			
 			return response;
 		}
 		
 		response.put("ok", user.getName() + "님 환영합니다.");
+		
 		return response;
 		
 	}

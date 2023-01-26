@@ -178,7 +178,6 @@ public class UserManagementFrame extends JFrame {
 				Map<String, String> response = userService.register(userJson.toString());
 				
 				if(response.containsKey("error")) {
-					
 					JOptionPane.showMessageDialog(null, response.get("error"), "error", JOptionPane.ERROR_MESSAGE);
 					
 					return;
