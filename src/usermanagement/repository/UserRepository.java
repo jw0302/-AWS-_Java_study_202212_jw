@@ -19,6 +19,9 @@ import usermanagement.entity.User;
 public class UserRepository {
 	
 	private DBConnectionMgr pool;
+	private Connection con = null;
+	private PreparedStatement pstmt = null;
+	private ResultSet rs =null;
 
 	private static UserRepository instance;
 	
@@ -37,10 +40,6 @@ public class UserRepository {
 	public int saveUser(User user) {
 		int successCount = 0;
 		String sql = null;
-		
-		Connection con = null;
-		PreparedStatement pstmt = null;
-		ResultSet rs = null;
 		
 		try {
 			con = pool.getConnection();
@@ -75,9 +74,6 @@ public class UserRepository {
 	public int saveRoleDtl(RoleDtl roleDtl) {
 		int successCount = 0;
 		String sql = null;
-		
-		Connection con = null;
-		PreparedStatement pstmt = null;
 		
 		try {
 			con = pool.getConnection();

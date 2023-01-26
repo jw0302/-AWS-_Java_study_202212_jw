@@ -1,30 +1,27 @@
 package usermanagement.frame;
 
-import java.awt.EventQueue;
-
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-
-import com.google.gson.JsonObject;
-
-import j20_JSON.builder.User;
-import usermanagement.service.UserService;
-
 import java.awt.CardLayout;
 import java.awt.Color;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.SwingConstants;
+import java.awt.EventQueue;
 import java.awt.Font;
-import javax.swing.JTextField;
-import javax.swing.JPasswordField;
-import javax.swing.JButton;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JPasswordField;
+import javax.swing.JTextField;
+import javax.swing.SwingConstants;
+
+import com.google.gson.JsonObject;
+
+import usermanagement.service.UserService;
 
 public class UserManagementFrame extends JFrame {
 	
@@ -233,12 +230,12 @@ public class UserManagementFrame extends JFrame {
 		
 		JButton loginButton = new JButton("Login");
 		loginButton.addMouseListener(new MouseAdapter() {
-			@Override
+			
 			public void mouseClicked(MouseEvent e) {
 				JsonObject loginUser = new JsonObject();
 				loginUser.addProperty("usernameAndEmail", usernameField.getText());
 				loginUser.addProperty("password", passwordField.getText());
-				
+
 				UserService userService = UserService.getInstance();
 				
 				Map<String, String> response = userService.authorize(loginUser.toString());
@@ -302,7 +299,9 @@ public class UserManagementFrame extends JFrame {
 			if(field.getText().isEmpty()) {
 				continue;
 			}
+			
 			field.setText("");
+			
 		}
 	}
 	

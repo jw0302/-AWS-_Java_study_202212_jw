@@ -12,6 +12,7 @@ public class Array2 {
 		System.out.println();
 	}
 
+	
 	public static void main(String[] args) {
 		
 		String[] names = new String[3];

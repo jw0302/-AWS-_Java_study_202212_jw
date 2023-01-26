@@ -8,6 +8,7 @@ public class Method1 {
 		return result; // 돌려줄때 자료형은 int
 	}
 	
+	
 	public static void main(String[] args) {
 		
 		int a1 = 10;

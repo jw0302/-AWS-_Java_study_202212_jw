@@ -5,7 +5,7 @@ import java.util.Scanner;
 public class J09_UserMain2 {
 
 	public static void main(String[] args) {
-//		Scanner scanner = new Scanner(System.in);
+		Scanner scanner = new Scanner(System.in);
 		
 		J09_User2 num = new J09_User2();
 		

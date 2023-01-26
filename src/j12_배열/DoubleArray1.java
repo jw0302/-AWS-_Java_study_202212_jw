@@ -9,7 +9,7 @@ public class DoubleArray1 {
 		
 		int[] nums = new int[2];
 		
-		int[][] d_nums = new int[3][2]; 							// [][] 대괄호 두개에서 두번째 대괄호는 int 배열을 담는 배열 이라는 뜻 but, 앞에 대괄호보다 뒤에 대괄호가 하위다
+		int[][] d_nums = new int[3][2]; 					// [][] 대괄호 두개에서 두번째 대괄호는 int 배열을 담는 배열 이라는 뜻 but, 앞에 대괄호보다 뒤에 대괄호가 하위다
 																	
 		// 잘 못된 접근 방식
 //		d_nums[0][0] = 1; 										    
