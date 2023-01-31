@@ -1,4 +1,4 @@
-package examTest2.test5;
+package examTest2.test4;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,7 +13,7 @@ class Information {
 		System.out.println("name=홍길동");
 		return name;
 	}
-
+// vip  김기영 gold 30 35
 	public String getRating() {
 		return rating;
 	}
@@ -28,13 +28,10 @@ public class MapList {
 	
 	public static void main(String[] args) {
 		List<Map<String, Object>> customers = new ArrayList<Map<String, Object>>();
-		Information information = new Information();
 		
 		for (Map<String, Object> customer : customers) {
-			System.out.println(customer.get(information.getName()));
 			
 		}
-		System.out.println(information);
 	}
 
 }

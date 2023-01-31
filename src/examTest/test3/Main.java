@@ -21,7 +21,8 @@ public class Main {
 	public static void main(String[] args) {
 		List<Student> students = new ArrayList<>();
 		students.add(new Student(1001, "홍길동"));
-		students.add(new Student(1002, "강철수"));
+//		students.add(null);									// 원래 문제에는 이렇게 표시되어 있어서 nullpoint 에러를 잡는 문제였다.
+		students.add(new Student(1002, "강철수"));			// 해결 답안
 		students.add(new Student(1003, "김영희"));
 		
 		for(Student student : students) {

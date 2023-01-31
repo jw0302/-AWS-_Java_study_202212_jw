@@ -1,4 +1,4 @@
-package examTest;
+package examTest.test1;
 
 class Calculator {
 	
@@ -20,11 +20,10 @@ public class Main {
 	
 	public static void main(String[] args) {
 		
-		Calculator calculator1 = new Calculator();
-		Calculator calculator2 = new Calculator();
+		Calculator calculator = new Calculator();
 		
-		System.out.println(calculator1.add(10, 20));
-		System.out.println(calculator2.sub(200, 100));
+		System.out.println(calculator.add(10, 20));
+		System.out.println(calculator.sub(200, 100));
 		
 	
 	}

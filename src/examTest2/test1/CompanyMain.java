@@ -1,7 +1,7 @@
-package examTest2;
+package examTest2.test1;
 
-import java.util.HashMap;
-import java.util.Map;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import lombok.AllArgsConstructor;
 
@@ -19,8 +19,10 @@ class Company {
 
 public class CompanyMain {
 	public static void main(String[] args) {
-		Company company = null;
-		Map<String, Object> map = new HashMap<>();
+		
+		Gson gson = new GsonBuilder().setPrettyPrinting().create();
+		Company company = new Company(100, "Samsung", "137-12번지", "부산", "dd", "aa");
+		System.out.println(gson.toJson(company));
 		
 		
 	}

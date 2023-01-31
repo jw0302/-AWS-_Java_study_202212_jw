@@ -35,6 +35,7 @@ public class Casting {
 		programs[0] = new Java();
 		programs[1] = new C();
 		
+		// 내가 푼 정답
 		for(int i = 0; i < programs.length; i++) {
 			if(programs[i] instanceof Java) {						
 				Java java  = (Java) programs[i];
@@ -47,5 +48,20 @@ public class Casting {
 				c.defineStructure();
 			}
 		}
+		
+		System.out.println("========================================================");
+		
+		//강사님 정답안
+		for(int i = 0; i < programs.length; i++) {
+			programs[i].develop();
+			if(programs[i].getClass() == Java.class) {						
+				Java java  = (Java) programs[i];
+				java.garbageCollection();
+			}else if(programs[i].getClass() == C.class) {						
+				C c  = (C) programs[i];
+				c.defineStructure();
+			}
+		}
+		
 	}
 }
