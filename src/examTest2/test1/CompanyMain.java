@@ -21,7 +21,7 @@ public class CompanyMain {
 	public static void main(String[] args) {
 		
 		Gson gson = new GsonBuilder().setPrettyPrinting().create();
-		Company company = new Company(100, "Samsung", "137-12번지", "부산", "dd", "aa");
+		Company company = new Company(100, "Apple","Apple Computer Inc. 1 infinite Loop", "Cupertino", "CA", "95014");
 		System.out.println(gson.toJson(company));
 		
 		

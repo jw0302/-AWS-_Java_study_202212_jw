@@ -56,15 +56,15 @@ public class Lambda2 {
 		
 		//	메소드 참조 표현식 ([인스턴스] :: [메소드명 또는 new]) 인스턴스 = 객체
 		Consumer<String> g = System.out :: println;
-		g.accept("오늘의 점심 메뉴는?");
+		g.accept("오늘의 점심메뉴는?");
 		
 		List<String> names = new ArrayList<>();
-		names.add("김동민");
-		names.add("김두영");
-		names.add("장진원");
-		names.add("조병철");
+		names.add("경북식당");
+		names.add("김밥천국");
+		names.add("부대찌개");
+		names.add("한식뷔페");
 		
-		names.forEach(name -> System.out.println("이름: " + name + "님"));
+		names.forEach(name -> System.out.println("메뉴: " + name + ""));
 		
 		// 위의 forEach문을 풀어서 쓰면 이렇게 쓰는것
 		Consumer<String> h = name -> System.out.println("이름: " + name + "님");
@@ -92,6 +92,8 @@ public class Lambda2 {
 			System.out.println("value: " + entry.getValue());
 			System.out.println();
 		}
+		
+		
 		
 		
 		

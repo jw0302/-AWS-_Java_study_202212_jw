@@ -1,36 +1,33 @@
 package examTest2.test4;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-class Information {
-	private String name;
-	private String rating;
-	private int age;
-	
-	public String getName() {
-		System.out.println("name=홍길동");
-		return name;
-	}
-// vip  김기영 gold 30 35
-	public String getRating() {
-		return rating;
-	}
-
-	public int getAge() {
-		return age;
-	}
-
-	
-}
 public class MapList {
 	
 	public static void main(String[] args) {
-		List<Map<String, Object>> customers = new ArrayList<Map<String, Object>>();
+		List<Map<String, Object>> customers = new ArrayList<>();
+		
+		Map<String, Object> customer1 = new HashMap<>();
+		customer1.put("name", "홍길동");
+		customer1.put("rating", "vip");
+		customer1.put("age", "30");
+		
+		customers.add(customer1);
+		
+		Map<String, Object> customer2 = new HashMap<>();
+		customer2.put("name", "김기영");
+		customer2.put("rating", "gold");
+		customer2.put("age", "35");
+		
+		customers.add(customer2);
 		
 		for (Map<String, Object> customer : customers) {
-			
+			for(Map.Entry<String, Object> entry : customer.entrySet()) {
+				System.out.println(entry);
+			}
 		}
 	}
 

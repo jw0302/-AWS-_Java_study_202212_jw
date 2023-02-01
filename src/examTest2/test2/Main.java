@@ -1,8 +1,9 @@
 package examTest2.test2;
 
+// 여기서부터
 class Factory {
-	private String factoryName;
 	private static Factory instance = null;
+	private String factoryName;
 	
 	private Factory() {}
 							
@@ -12,15 +13,7 @@ class Factory {
 		}
 		return instance;
 	}
-
-	public String getFactoryName() {
-		return factoryName;
-	}
-
-	public void setFactoryName(String factoryName) {
-		this.factoryName = factoryName;
-	}
-}
+}		// 여기까지가 싱클톤
 
 public class Main {
 
