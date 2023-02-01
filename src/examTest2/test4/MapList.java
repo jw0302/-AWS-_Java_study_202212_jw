@@ -8,6 +8,7 @@ import java.util.Map;
 public class MapList {
 	
 	public static void main(String[] args) {
+		
 		List<Map<String, Object>> customers = new ArrayList<>();
 		
 		Map<String, Object> customer1 = new HashMap<>();
@@ -26,7 +27,6 @@ public class MapList {
 		
 		for (Map<String, Object> customer : customers) {
 			for(Map.Entry<String, Object> entry : customer.entrySet()) {
-				System.out.println(entry);
 			}
 		}
 	}
