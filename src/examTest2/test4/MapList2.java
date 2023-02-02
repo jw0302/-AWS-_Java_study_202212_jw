@@ -22,14 +22,13 @@ public class MapList2 {
 		sizes.add("XL");
 		
 		Map<String, List<String>> option1 = new HashMap<>();
-		option1.put("색상=", colors.subList(0, 2));
+		option1.put("색상=", colors);
 		
 		Map<String, List<String>> option2 = new HashMap<>();
-		option2.put("사이즈=", sizes.subList(0, 4));
+		option2.put("사이즈=", sizes);
 		
-
 		for(Map.Entry<String, List<String>> entry : options.entrySet()) {
-			System.out.println(entry);
+			System.out.println(entry.getKey());
 		}
 			
 			

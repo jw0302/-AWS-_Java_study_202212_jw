@@ -20,4 +20,5 @@ public class ProductMain {
 		Product product = new Product(2001, "Laptop", "Samsung GalaxyBook", 1400000);
 		System.out.println(gson.toJson(product));
 	}
+	
 }
