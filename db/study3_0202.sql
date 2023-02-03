@@ -44,3 +44,17 @@ ADD UNIQUE product_name(product_name);
 
 ALTER TABLE product_mst
 DROP INDEX product_id1;
+
+-- SELECT 
+-- 	`library_mst`.`도서명`,
+--     `book_mst`.`book_id`
+-- FROM 
+-- 	`library_mst`
+-- JOIN `book_mst` ON `library_mst`.`도서명` = `book_mst`.`book_name`;
+
+/*book_id값으로 들어가 있던 도서명을 book_name값으로 바꾸고 싶을때*/ 
+UPDATE library_mst										-- 이 명령문은 library_mst 테이블을 업데이트 하겠다는 의미입니다. 
+SET 도서명 = (											-- 이 명령문은 library_mst 테이블의 도서명 열을 지정하겠다는 의미입니다. 
+	SELECT book_name 									-- 이 명령문은 book_mst 테이블에서 book_name 을 선택하겠다는 의미입니다.
+	FROM book_mst									 	-- 이 명령문은 book_mst 테이블에서 데이터를 가져올 것이라는 의미입니다.
+	WHERE book_mst.book_id = library_mst.도서명);			-- 이 명령문은 book_mst의 book_id열이 library_mst의 도서명 열과 같은 행만을 선택하겠다는 의미입니다.
