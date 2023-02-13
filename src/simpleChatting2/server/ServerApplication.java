@@ -1,4 +1,4 @@
-package simplechatting.server;
+package simpleChatting2.server;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -8,14 +8,18 @@ import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.net.SocketOption;
 import java.util.ArrayList;
 import java.util.List;
 
 import com.google.gson.Gson;
 
 import lombok.Data;
+import simpleChatting2.dto.JoinReqDto;
+import simpleChatting2.dto.JoinRespDto;
+import simpleChatting2.dto.MessageReqDto;
+import simpleChatting2.dto.MessageRespDto;
 import simpleChatting2.dto.RequestDto;
+import simpleChatting2.dto.ResponseDto;
 
 @Data
 class ConnectedSocket extends Thread {
@@ -37,45 +41,55 @@ class ConnectedSocket extends Thread {
 	@Override
 	public void run() {
 		try {
-			outputStream = socket.getOutputStream();
-			PrintWriter out = new PrintWriter(outputStream, true);
-			out.println("join");
-			
 			inputStream = socket.getInputStream();
 			BufferedReader in = new BufferedReader(new InputStreamReader(inputStream));
 			
-			username = in.readLine();
-			System.out.println(username + "님이 접속하였습니다.");
-			
-			String userListStr = "";
-			
-			for(int i = 0; i < socketList.size(); i++) {
-				userListStr += socketList.get(i).getUsername();
-				
-				if(i < socketList.size() -1) {
-					userListStr += ",";
-				}
-			}
-			
-			for(ConnectedSocket connectedSocket : socketList) {
-				outputStream =connectedSocket.getSocket().getOutputStream();
-				out = new PrintWriter(outputStream, true);
-				out.println("@welcome/" + username + "님이 접속하였습니다.");
-				out.println("@userList/" + userListStr);
-			}
-			
 			while(true) {
-				String message = in.readLine();
+				String request = in.readLine(); // requestDto(JSON)
+				RequestDto requestDto = gson.fromJson(request, RequestDto.class);
 				
-				for(ConnectedSocket connectedSocket : socketList) {
-					outputStream =connectedSocket.getSocket().getOutputStream();
-					out = new PrintWriter(outputStream, true);
-					out.println(message);
+				switch(requestDto.getResource()) {
+					case "join" : 
+						
+						JoinReqDto joinReqDto = gson.fromJson(requestDto.getBody(), JoinReqDto.class);
+						username = joinReqDto.getUsername();
+						List<String> connectedUsers = new ArrayList<>();
+						
+						for(ConnectedSocket connectedSocket : socketList) {
+							connectedUsers.add(connectedSocket.getUsername());
+						}
+						
+						JoinRespDto joinRespDto = new JoinRespDto(username + "님이 접속하였습니다.", connectedUsers);
+						sendToAll(requestDto.getResource(), "ok", gson.toJson(joinRespDto));
+						break;
+					case "sendMessage" :
+						
+						MessageReqDto messageReqDto = gson.fromJson(requestDto.getBody(), MessageReqDto.class);
+						
+						if(messageReqDto.getToUser().equalsIgnoreCase("all")) {
+							String message = messageReqDto.getFromUser() + "[전체]: " + messageReqDto.getMessageValue();
+							MessageRespDto messageRespDto = new MessageRespDto(message);
+							sendToAll(requestDto.getResource(), "ok", gson.toJson(messageRespDto));
+						}						
+						
+						break;
 				}
 			}
 			
 		} catch (IOException e) {
 			e.printStackTrace();
+		}
+	}
+	
+	
+	private void sendToAll(String resource, String status, String body) throws IOException {
+		ResponseDto responseDto = new ResponseDto(resource, status, body);
+		
+		for(ConnectedSocket connectedSocket : socketList) {
+			OutputStream outputStream = connectedSocket.getSocket().getOutputStream();
+			PrintWriter out = new PrintWriter(outputStream, true);
+			
+			out.println(gson.toJson(responseDto));
 		}
 	}
 	
