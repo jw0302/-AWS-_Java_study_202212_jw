@@ -38,7 +38,10 @@ public class ClientRecive extends Thread {
 						JoinRespDto joinRespDto = gson.fromJson(responseDto.getBody(), JoinRespDto.class);
 						ChattingClient.getinstance().getContentView().append(joinRespDto.getWelcomeMessage() + "\n");
 						ChattingClient.getinstance().getUserListModel().clear();
+						ChattingClient.getinstance().getUserListModel().addElement("--- 전체 ---");
 						ChattingClient.getinstance().getUserListModel().addAll(joinRespDto.getConnectedUsers());
+						ChattingClient.getinstance().getUserList().setSelectedIndex(0);
+						
 						
 						break;
 					case "sendMessage" :
