@@ -30,6 +30,8 @@ import lombok.Getter;
 import simpleChatting2.dto.JoinReqDto;
 import simpleChatting2.dto.MessageReqDto;
 import simpleChatting2.dto.RequestDto;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 @Getter
 public class ChattingClient extends JFrame {
@@ -190,6 +192,10 @@ public class ChattingClient extends JFrame {
 		messageScroll.setViewportView(messageInput);
 		
 		JButton sendButton = new JButton("전송");
+		sendButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
 		sendButton.addMouseListener(new MouseAdapter() {
 			
 			

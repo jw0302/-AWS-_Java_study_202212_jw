@@ -33,6 +33,8 @@ import com.google.gson.JsonObject;
 import usermanagement.dto.RequestDto;
 import usermanagement.dto.ResponseDto;
 import usermanagement.service.UserService;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class UserManagementFrame extends JFrame {
 	
@@ -192,6 +194,10 @@ public class UserManagementFrame extends JFrame {
 		registerPanel.add(registerEmailLabel);
 		
 		JButton registerButton = new JButton("Register");
+		registerButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
 		registerButton.addMouseListener(new MouseAdapter() {
 			
 			public void mouseClicked(MouseEvent e) {
