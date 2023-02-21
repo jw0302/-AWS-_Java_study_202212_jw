@@ -27,6 +27,7 @@ class ConnectedSocket extends Thread {
 	
 	private String username;
 	
+	
 	public ConnectedSocket(Socket socket) {
 		this.socket = socket;
 		gson = new Gson();
