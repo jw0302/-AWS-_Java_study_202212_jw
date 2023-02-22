@@ -39,7 +39,7 @@ public class ClientRecive extends Thread {
 						JoinRespDto joinRespDto = gson.fromJson(responseDto.getBody(), JoinRespDto.class);
 						ChattingClient.getinstance().getRpContentsView().append(joinRespDto.getWelcomeMessage() + "\n");
 						ChattingClient.getinstance().getUserListModel().clear();
-						ChattingClient.getinstance().getUserListModel().addElement("제목: " + ChattingClient.getinstance().getUsername());
+						ChattingClient.getinstance().getUserListModel().addElement("제목: " + ChattingClient.getinstance().getRoomOwner());
 						ChattingClient.getinstance().getUserListModel().addAll(joinRespDto.getConnectedUsers());
 						ChattingClient.getinstance().getCpChatList().setSelectedIndex(0);
 						

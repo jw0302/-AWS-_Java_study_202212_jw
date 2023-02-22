@@ -6,8 +6,10 @@ import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.net.ConnectException;
@@ -29,8 +31,6 @@ import javax.swing.SwingConstants;
 
 import com.google.gson.Gson;
 
-import chattingKakao.Dto.JoinReqDto;
-import chattingKakao.Dto.RequestDto;
 import lombok.Getter;
 
 
@@ -47,13 +47,16 @@ public class ChattingClient extends JFrame {
 		return instance;
 	}
 	
+	private static final String SERVER_HOST = "localhost";
+    private static final int SERVER_PORT = 9090;
+	
 
 	private Socket socket;
 	private Gson gson;
 	private InputStream inputStream;
 	private OutputStream outputStream;
 	
-	private String username;
+	private String roomOwner;
 	
 	private CardLayout mainCard;
 	private JPanel mainPanel;
@@ -129,28 +132,23 @@ public class ChattingClient extends JFrame {
 		
 			@Override
 			public void mouseClicked(MouseEvent e) {
+				
+				roomOwner = lpUserNameInput.getText();
 								
 				try {
-					socket = new Socket("127.0.0.1", 9090);
+					Socket socket = new Socket(SERVER_HOST, SERVER_PORT);
 					
+					BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+					PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
 					
+
 					JOptionPane.showMessageDialog(null,
-							socket.getInetAddress() + "서버 접속",
+							socket.getInetAddress() + roomOwner + "서버 접속",
 							"접속성공!",
 							JOptionPane.INFORMATION_MESSAGE);
 					
-					ClientRecive clientRecive = new ClientRecive(socket);
-					clientRecive.start();
 					
-					JoinReqDto joinReqDto = new JoinReqDto(username);
-					String joinReqDtoJson = gson.toJson(joinReqDto);
-					RequestDto requestDto = new RequestDto("join", joinReqDtoJson);
-					String requestDtoJson = gson.toJson(requestDto);
 					
-					outputStream = socket.getOutputStream();
-					PrintWriter out = new PrintWriter(outputStream, true);
-					out.println(requestDtoJson);
-									
 				} catch (ConnectException e1) {
 					
 					JOptionPane.showMessageDialog(null,
@@ -164,8 +162,8 @@ public class ChattingClient extends JFrame {
 					e1.printStackTrace();
 				}
 				
-				username = lpUserNameInput.getText();
-//				userListModel.addElement(username);
+//				roomOwner = lpUserNameInput.getText();
+//				userListModel.addElement(roomOwner);
 				mainCard.show(mainPanel, "chatListPanel");
 			}
 		});
@@ -206,9 +204,9 @@ public class ChattingClient extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				
-
-				username = cpChatList.getSelectedValue().toString();
-		        String message = username + " 님이 방을 생성하였습니다";
+				roomOwner = lpUserNameInput.getText();
+				String username = cpChatList.getSelectedValue().toString();
+		        String message = roomOwner + " 님이 방을 생성하였습니다";
 		        rpContentsView.setText(message);
 		        
 		        rpChatTitle.setText(username + " (님)의 방");
@@ -230,13 +228,18 @@ public class ChattingClient extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				
-				username = JOptionPane.showInputDialog(null,
+				String cpTitleName = JOptionPane.showInputDialog(null,
 						"방의 제목을 입력해주시오.",
 						"방 생성",
 						JOptionPane.INFORMATION_MESSAGE);
 				
-				userListModel.addElement("제목: " + username);
-				username = cpCreateBtn.getText();
+
+				userListModel.addElement("제목: " + cpTitleName);
+				rpChatTitle.setText(cpTitleName + " (님)의 방");
+				String message = roomOwner + " 님이 방을 생성하였습니다";
+		        rpContentsView.setText(message);
+				cpTitleName = cpCreateBtn.getText();
+				mainCard.show(mainPanel, "chatRoomPanel");
 				
 			}
 		});
@@ -315,7 +318,7 @@ public class ChattingClient extends JFrame {
 				
 				String message = rpInput.getText();
 				
-			    rpContentsView.append("\n" + username + ": " + message);
+			    rpContentsView.append("\n" + roomOwner + ": " + message);
 			    rpInput.setText("");
 				
 			}
