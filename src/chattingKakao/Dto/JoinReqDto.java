@@ -8,6 +8,5 @@ import lombok.Data;
 public class JoinReqDto {
 	
 	private String username;
-	private String roomOwner;
 
 }

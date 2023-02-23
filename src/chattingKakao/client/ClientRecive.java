@@ -19,7 +19,9 @@ public class ClientRecive extends Thread {
 	
 	private final Socket socket;
 	private InputStream inputStream;
+
 	private Gson gson;
+	
 	
 	
 	@Override
@@ -35,7 +37,7 @@ public class ClientRecive extends Thread {
 				ResponseDto responseDto = gson.fromJson(request, ResponseDto.class);
 				
 				switch(responseDto.getResource()) {
-					case "join" :
+					case "create" :
 						JoinRespDto joinRespDto = gson.fromJson(responseDto.getBody(), JoinRespDto.class);
 						ChattingClient.getinstance().getRpContentsView().append(joinRespDto.getWelcomeMessage() + "\n");
 						ChattingClient.getinstance().getUserListModel().clear();
@@ -54,7 +56,7 @@ public class ClientRecive extends Thread {
 			
 		} catch (IOException e) {
 			e.printStackTrace();
-		}
+		} 
 		
 	}
 

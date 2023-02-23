@@ -4,6 +4,8 @@ import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.Font;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.BufferedReader;
@@ -31,7 +33,11 @@ import javax.swing.SwingConstants;
 
 import com.google.gson.Gson;
 
+import chattingKakao.Dto.JoinReqDto;
+import chattingKakao.Dto.MessageReqDto;
+import chattingKakao.Dto.RequestDto;
 import lombok.Getter;
+
 
 
 @Getter
@@ -47,8 +53,8 @@ public class ChattingClient extends JFrame {
 		return instance;
 	}
 	
-	private static final String SERVER_HOST = "localhost";
-    private static final int SERVER_PORT = 9090;
+//	private static final String SERVER_HOST = "127.0.0.1";
+//    private static final int SERVER_PORT = 9090;
 	
 
 	private Socket socket;
@@ -57,6 +63,7 @@ public class ChattingClient extends JFrame {
 	private OutputStream outputStream;
 	
 	private String roomOwner;
+	private String username;
 	
 	private CardLayout mainCard;
 	private JPanel mainPanel;
@@ -133,10 +140,13 @@ public class ChattingClient extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				
+//				String ip = roomOwner;
+//				int port = 9090;
+				
 				roomOwner = lpUserNameInput.getText();
 								
 				try {
-					Socket socket = new Socket(SERVER_HOST, SERVER_PORT);
+					Socket socket = new Socket("localhost", 9090);
 					
 					BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 					PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
@@ -147,7 +157,9 @@ public class ChattingClient extends JFrame {
 							"접속성공!",
 							JOptionPane.INFORMATION_MESSAGE);
 					
+					out.println(gson.toJson(roomOwner));
 					
+					mainCard.show(mainPanel, "chatListPanel");
 					
 				} catch (ConnectException e1) {
 					
@@ -164,7 +176,7 @@ public class ChattingClient extends JFrame {
 				
 //				roomOwner = lpUserNameInput.getText();
 //				userListModel.addElement(roomOwner);
-				mainCard.show(mainPanel, "chatListPanel");
+//				mainCard.show(mainPanel, "chatListPanel");
 			}
 		});
 		
@@ -225,22 +237,69 @@ public class ChattingClient extends JFrame {
 		
 		cpCreateBtn = new JButton("");
 		cpCreateBtn.addMouseListener(new MouseAdapter() {
+			
+			
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				
-				String cpTitleName = JOptionPane.showInputDialog(null,
-						"방의 제목을 입력해주시오.",
-						"방 생성",
-						JOptionPane.INFORMATION_MESSAGE);
+//				username = JOptionPane.showInputDialog(null,
+//						"방의 제목을 입력해주시오.",
+//						"방 생성",
+//						JOptionPane.INFORMATION_MESSAGE);
+//				
+//				try {
+//					
+//					ClientRecive clientRecive = new ClientRecive(socket);
+//					clientRecive.start();
+//					
+//					JoinReqDto joinReqDto = new JoinReqDto(username);
+//					String joinReqDtoJson = gson.toJson(joinReqDto);
+//					RequestDto requestDto = new RequestDto("create", joinReqDtoJson);
+//					String requestDtoJson = gson.toJson(requestDto);
+//					
+//					outputStream = socket.getOutputStream();
+//					PrintWriter out = new PrintWriter(outputStream, true);
+//					out.println(requestDtoJson);
+//					
+//					userListModel.addElement("제목: " + username);
+//					rpChatTitle.setText(username + " (님)의 방");
+//					String message = roomOwner + " 님이 방을 생성하였습니다";
+//					rpContentsView.setText(message);
+//					username = cpCreateBtn.getText();
+//					mainCard.show(mainPanel, "chatRoomPanel");
+//					
+//				} catch (UnknownHostException e1) {
+//					e1.printStackTrace();
+//				} catch (IOException e1) {
+//					e1.printStackTrace();
+//				}
+					
+				username = JOptionPane.showInputDialog(null,
+							"방의 제목을 입력해주시오.",
+							"방 생성",
+							JOptionPane.INFORMATION_MESSAGE);
 				
-
-				userListModel.addElement("제목: " + cpTitleName);
-				rpChatTitle.setText(cpTitleName + " (님)의 방");
+				if (username != null && !username.isEmpty()) {
+					try {
+						
+						JoinReqDto joinReqDto = new JoinReqDto(username);
+						RequestDto requestDto = new RequestDto("create", gson.toJson(joinReqDto));
+						outputStream.write((gson.toJson(requestDto) + "\n").getBytes());
+						outputStream.flush();
+						
+					} catch (IOException e1) {
+						e1.printStackTrace();
+					}
+				}
+				
+				
+				userListModel.addElement("제목: " + username);
+				rpChatTitle.setText(username + " (님)의 방");
 				String message = roomOwner + " 님이 방을 생성하였습니다";
-		        rpContentsView.setText(message);
-				cpTitleName = cpCreateBtn.getText();
+				rpContentsView.setText(message);
+				username = cpCreateBtn.getText();
 				mainCard.show(mainPanel, "chatRoomPanel");
-				
+					
 			}
 		});
 		
@@ -274,6 +333,17 @@ public class ChattingClient extends JFrame {
 		chatRoomPanel.add(rpInputScroll);
 		
 		rpInput = new JTextField();
+		rpInput.addKeyListener(new KeyAdapter() {
+			
+			
+			@Override
+			public void keyPressed(KeyEvent e) {
+				
+				if(e.getKeyCode() == KeyEvent.VK_ENTER) {
+					sendMessage();
+				}
+			}
+		});
 		rpInputScroll.setViewportView(rpInput);
 		rpInput.setColumns(10);
 		
@@ -316,10 +386,12 @@ public class ChattingClient extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				
-				String message = rpInput.getText();
+				sendMessage();
 				
-			    rpContentsView.append("\n" + roomOwner + ": " + message);
-			    rpInput.setText("");
+//				String message = rpInput.getText();
+//				
+//			    rpContentsView.append("\n" + roomOwner + ": " + message);
+//			    rpInput.setText("");
 				
 			}
 		});
@@ -327,6 +399,39 @@ public class ChattingClient extends JFrame {
 		rpInputSubmit.setIcon(new ImageIcon(ChattingClient.class.getResource("/chattingKakao/image/mail_send_icon_180871.png")));
 		rpInputSubmit.setBounds(379, 663, 85, 98);
 		chatRoomPanel.add(rpInputSubmit);
+	}
+	
+	
+	private void sendRequest(String resource, String body) {
+		OutputStream outputStream;
+		try {
+			outputStream = socket.getOutputStream();
+			PrintWriter out = new PrintWriter(outputStream, true);
+			
+			RequestDto requestDto = new RequestDto(resource, body);
+			
+			out.println(gson.toJson(requestDto));
+			
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+	}
+	
+	
+	private void sendMessage() {
+		
+		if(!rpInput.getText().isBlank()) {
+			
+			String toUser = cpChatList.getSelectedIndex() == 0 ? "all" : cpChatList.getSelectedValue();
+					
+			MessageReqDto messageReqDto = 
+			new MessageReqDto(toUser, username, rpInput.getText());
+					
+			sendRequest("sendMessage", gson.toJson(messageReqDto));
+			rpInput.setText("");	
+				
+		}
 	}
 	
 }
